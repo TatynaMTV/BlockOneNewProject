@@ -42,8 +42,6 @@ fibonacci(n: 15)
 
 // Задание #5. Напишите программу для сортировки массива, использующую метод пузырька. Сортировка должна происходить в отдельной функции, принимающей на вход исходный массив.
 
-var someIntArray = [3, 5, 7, 2, 0, 1, 6, 4]
-
 func bubbleSort<T: Comparable>(array: inout [T]) -> [T] {
     for i in 0..<array.count {
         for j in 1..<array.count - i {
@@ -57,7 +55,17 @@ func bubbleSort<T: Comparable>(array: inout [T]) -> [T] {
     return array
 }
 
+var someIntArray = [3, 5, 7, 2, 0, 1, 6, 4]
 bubbleSort(array: &someIntArray)
 
 // Задание #6. Напишите программу, решающую задачу: есть входящая строка формата "abc123", где сначала идет любая последовательность букв, потом число. Необходимо получить новую строку, в конце которой будет число на единицу больше предыдущего, то есть "abc124".
 
+func changeLastChar(str: inout String) {
+    if let last = str.last, let newValue = Int(String(last)) {
+        str = String(str.dropLast())
+        str.append(String(newValue + 1))
+    }
+}
+
+var someString = "abc123"
+changeLastChar(str: &someString)
