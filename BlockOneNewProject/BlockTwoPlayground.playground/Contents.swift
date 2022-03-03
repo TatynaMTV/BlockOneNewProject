@@ -61,11 +61,11 @@ bubbleSort(array: &someIntArray)
 // Задание #6. Напишите программу, решающую задачу: есть входящая строка формата "abc123", где сначала идет любая последовательность букв, потом число. Необходимо получить новую строку, в конце которой будет число на единицу больше предыдущего, то есть "abc124".
 
 func changeLastChar(str: inout String) {
-    if let last = str.last, let newValue = Int(String(last)) {
-        str = String(str.dropLast())
-        str.append(String(newValue + 1))
-    }
+    let numberArray = str.compactMap({Int(String($0))})
+    let newNumber = numberArray.reduce(0, {10 * $0 + $1})
+    str = String(str.dropLast(numberArray.count))
+    str.append(String(newNumber + 1))
 }
 
-var someString = "abc123"
+var someString = "abc129"
 changeLastChar(str: &someString)
