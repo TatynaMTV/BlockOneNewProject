@@ -5,6 +5,9 @@
       location = "group:BlockTwoPlayground.playground">
    </FileRef>
    <FileRef
+      location = "group:BlockThreePlayground.playground">
+   </FileRef>
+   <FileRef
       location = "group:BlockOneNewProject.xcodeproj">
    </FileRef>
    <FileRef
