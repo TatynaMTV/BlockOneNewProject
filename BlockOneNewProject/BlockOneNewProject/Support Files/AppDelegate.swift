@@ -9,12 +9,18 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+  
+  var window: UIWindow?
+  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+        
+      let window = UIWindow(frame: UIScreen.main.bounds)
+      let navVC = UINavigationController(rootViewController: SplashScreenViewController())
+      window.rootViewController = navVC
+      window.makeKeyAndVisible()
+      self.window = window
+      return true
+      
     }
 
     // MARK: UISceneSession Lifecycle
