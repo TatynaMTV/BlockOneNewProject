@@ -25,14 +25,23 @@ class SplashScreenViewController: UIViewController {
     createSpinnerLabel()
     createLogo()
     setConstraints()
+    presentNextController()
   }
   
+  func presentNextController() {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+      guard let viewController = TabBarController().viewControllers?[2] else { return }
+//      viewController.modalTransitionStyle = .coverVertical
+//      viewController.modalPresentationStyle = .fullScreen
+      self.present(viewController, animated: false)
+    }
+  }
 }
 
 // MARK: - Create UI elements & set constraints
 
 extension SplashScreenViewController {
-  
+
   func createMainImage() {
     mainImageView.image = UIImage(named: "logo")
     mainImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +56,7 @@ extension SplashScreenViewController {
   
   func createSpinnerLabel() {
     spinnerLabel.text = "Загрузка..."
-    spinnerLabel.font = UIFont(name: "SFUIText-regular", size: 13)
+    spinnerLabel.font = UIFont.systemFont(ofSize: 13)
     spinnerLabel.textColor = .darkGray
     spinnerLabel.translatesAutoresizingMaskIntoConstraints = false
   }
@@ -57,7 +66,7 @@ extension SplashScreenViewController {
     logo.translatesAutoresizingMaskIntoConstraints = false
   }
   
-  // constraints
+  // Set constraints
   
   func setConstraints() {
     self.view.addSubview(mainImageView)
@@ -71,7 +80,7 @@ extension SplashScreenViewController {
     
     let spinnerStackView = UIStackView(arrangedSubviews: [spinner, spinnerLabel])
     spinnerStackView.axis = .vertical
-    spinnerStackView.spacing = 15
+    spinnerStackView.spacing = 10
     spinnerStackView.alignment = .center
     spinnerStackView.distribution = .fillProportionally
     spinnerStackView.translatesAutoresizingMaskIntoConstraints = false
