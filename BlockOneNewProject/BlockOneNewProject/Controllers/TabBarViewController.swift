@@ -53,7 +53,7 @@ class TabBarController: UITabBarController {
     nav3.tabBarItem = UITabBarItem(title: "История", image: UIImage(systemName: "clock.arrow.circlepath"), tag: 4)
     nav4.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.circle"), tag: 5)
 
-    setViewControllers([nav, nav2, nav1, nav3, nav4], animated: false)
+    setViewControllers([nav1, nav2, nav, nav3, nav4], animated: false)
 
     let appearance = UITabBarAppearance()
     appearance.configureWithOpaqueBackground()
@@ -80,7 +80,7 @@ class TabBarController: UITabBarController {
   func setupMiddleButton() {
 
     middleButton.layer.cornerRadius = middleButtonDiameter/2
-    middleButton.backgroundColor = .greenLeaf()
+    middleButton.backgroundColor = .melon()
     middleButton.translatesAutoresizingMaskIntoConstraints = false
 
     buttonImage.image = UIImage(systemName: "heart.fill")
@@ -93,16 +93,16 @@ class TabBarController: UITabBarController {
   // MARK: - Actions
 
   @objc private func didPressMiddleButton(sender: UIButton) {
-    print("tap")
     selectedIndex = 2
+    middleButton.backgroundColor = .greenLeaf()
   }
 
   private func shapePath() -> CGPath {
     let path = UIBezierPath()
     path.move(to: CGPoint(x: 0, y: 0))
     path.addLine(to: CGPoint(x: tabBarWidth, y: 0))
-    path.addLine(to: CGPoint(x: tabBarWidth, y: tabBarHeight))
-    path.addLine(to: CGPoint(x: 0, y: tabBarHeight))
+//    path.addLine(to: CGPoint(x: tabBarWidth, y: tabBarHeight))
+//    path.addLine(to: CGPoint(x: 0, y: tabBarHeight))
     path.close()
     return path.cgPath
   }
@@ -123,7 +123,7 @@ class TabBarController: UITabBarController {
     shapeLayer.path = shapePath()
     shapeLayer.strokeColor = UIColor.lightGray.cgColor
     shapeLayer.fillColor = UIColor.white.cgColor
-    shapeLayer.lineWidth = 0.0
+    shapeLayer.lineWidth = 1.0
 
     let circleLayer = CAShapeLayer()
     circleLayer.path = circlePath()
@@ -161,5 +161,18 @@ class TabBarController: UITabBarController {
       buttonImage.centerXAnchor.constraint(equalTo: middleButton.centerXAnchor),
       buttonImage.centerYAnchor.constraint(equalTo: middleButton.centerYAnchor)
     ])
+  }
+}
+
+// MARK: - TabBarController Delegate
+
+extension TabBarController: UITabBarControllerDelegate {
+  override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    let selectedIndex = self.tabBar.items?.firstIndex(of: item)
+    if selectedIndex != 2 {
+      middleButton.backgroundColor = .melon()
+    } else {
+      middleButton.backgroundColor = .greenLeaf()
+    }
   }
 }
