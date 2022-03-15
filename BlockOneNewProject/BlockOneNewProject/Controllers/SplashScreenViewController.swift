@@ -10,10 +10,10 @@ import Alamofire
 
 class SplashScreenViewController: UIViewController {
 
-  let mainImageView = UIImageView()
-  var spinner = UIActivityIndicatorView()
-  let spinnerLabel = UILabel()
-  let logo = UIImageView()
+  private let mainImageView = UIImageView()
+  private var spinner = UIActivityIndicatorView()
+  private let spinnerLabel = UILabel()
+  private let logo = UIImageView()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,7 +28,7 @@ class SplashScreenViewController: UIViewController {
     presentNextController()
   }
 
-  func presentNextController() {
+  private func presentNextController() {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       let viewController = TabBarController()
       viewController.modalTransitionStyle = .coverVertical

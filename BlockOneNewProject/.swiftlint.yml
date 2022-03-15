@@ -19,3 +19,4 @@ disabled_rules:
   - unused_setter_value
   - empty_enum_arguments
   - for_where
+  - trailing_whitespace

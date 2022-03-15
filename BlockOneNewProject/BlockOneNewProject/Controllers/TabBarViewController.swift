@@ -53,7 +53,7 @@ class TabBarController: UITabBarController {
     nav3.tabBarItem = UITabBarItem(title: "История", image: UIImage(systemName: "clock.arrow.circlepath"), tag: 4)
     nav4.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.crop.circle"), tag: 5)
 
-    setViewControllers([nav1, nav2, nav, nav3, nav4], animated: false)
+    setViewControllers([nav, nav2, nav1, nav3, nav4], animated: false)
 
     let appearance = UITabBarAppearance()
     appearance.configureWithOpaqueBackground()
@@ -68,7 +68,7 @@ class TabBarController: UITabBarController {
     UITabBar.appearance().barTintColor = .white
     let appearance = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
-    appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont(name: "OfficinaSansExtraBoldSCC", size: 21) ?? UIFont.systemFont(ofSize: 21, weight: .semibold)]
+    appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont(name: "OfficinaSansExtraBoldSCC", size: 21) ?? UIFont.systemFont(ofSize: 21, weight: .bold)]
     appearance.backgroundColor = .greenLeaf()
     UIWindow.appearance().overrideUserInterfaceStyle = .light
     UINavigationBar.appearance().standardAppearance = appearance

@@ -13,6 +13,7 @@ struct HelpCategories {
 }
 
 class HelpCategoriesViewController: UIViewController {
+
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "Выберите категорию помощи"
@@ -29,7 +30,15 @@ class HelpCategoriesViewController: UIViewController {
     return collectionView
   }()
 
-  let cellID = "HelpCategoryID"
+  private let barButtonItem: UIButton = {
+    let barButton = UIButton.init(type: .custom)
+    barButton.setBackgroundImage(UIImage(systemName: "chevron.backward"), for: .normal)
+    barButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+    barButton.tintColor = .white
+    return barButton
+  }()
+
+  private let cellID = "HelpCategoryID"
 
   let categories: [HelpCategories] = [
     HelpCategories(image: UIImage(named: "children"), name: "Дети"),
@@ -43,27 +52,47 @@ class HelpCategoriesViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     title = "Помочь"
+    
+    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: barButtonItem)
 
-    setupBarButtonItem()
     setupViews()
-    setupConstraints()
+    setConstraints()
+  }
+}
+
+extension HelpCategoriesViewController: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return categories.count
   }
 
-  func setupBarButtonItem() {
-    let barButton = UIButton.init(type: .custom)
-    barButton.setBackgroundImage(UIImage(systemName: "chevron.backward"), for: .normal)
-    barButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-    barButton.tintColor = .white
-    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: barButton)
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! HelpCategoryCollectionViewCell // swiftlint:disable:this force_cast
+    cell.setup(with: categories[indexPath.row])
+    return cell
   }
+}
 
-  func setupViews() {
+extension HelpCategoriesViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let width = UIScreen.main.bounds.size.width / 2 - 15
+    let height = CGFloat(160)
+
+    return CGSize(width: width, height: height)
+  }
+}
+
+// MARK: - Create UI elements & set constraints
+
+extension HelpCategoriesViewController {
+
+  private func setupViews() {
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.register(HelpCategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
   }
 
-  func setupConstraints() {
+  // Set constraints
+  private func setConstraints() {
     view.addSubview(titleLabel)
 
     NSLayoutConstraint.activate([
@@ -79,25 +108,5 @@ class HelpCategoriesViewController: UIViewController {
       collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 9),
       collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -9)
     ])
-  }
-}
-
-extension HelpCategoriesViewController: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return categories.count
-  }
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! HelpCategoryCollectionViewCell // swiftlint:disable:this force_cast
-    cell.setup(with: categories[indexPath.row])
-    return cell
-  }
-}
-
-extension HelpCategoriesViewController: UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let width = UIScreen.main.bounds.size.width / 2 - 15
-    let height = CGFloat(160)
-
-    return CGSize(width: width, height: height)
   }
 }
