@@ -153,6 +153,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2D555CA27CDA0B9000EC5C9 /* Build configuration list for PBXNativeTarget "BlockOneNewProject" */;
 			buildPhases = (
+				E20EFE9927E0744D007F0FFE /* ShellScript */,
 				2BB665ED6D230D1C8533BA1B /* [CP] Check Pods Manifest.lock */,
 				E2D555B227CDA0B7000EC5C9 /* Sources */,
 				E2D555B327CDA0B7000EC5C9 /* Frameworks */,
@@ -254,6 +255,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlockOneNewProject/Pods-BlockOneNewProject-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E20EFE9927E0744D007F0FFE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

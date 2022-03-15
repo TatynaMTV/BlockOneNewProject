@@ -1,0 +1,21 @@
+line_length:
+  - 500 # warning
+  - 800 # error
+type_body_length:
+  - 500 # warning
+  - 800 # error
+function_body_length:
+  - 50 # warning
+file_length:
+  warning: 1300
+  error: 2000
+cyclomatic_complexity:
+  warning: 20
+  error: 50
+disabled_rules:
+  - comment_spacing
+  - identifier_name
+  - nesting
+  - unused_setter_value
+  - empty_enum_arguments
+  - for_where

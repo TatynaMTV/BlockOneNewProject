@@ -8,5 +8,6 @@ target 'BlockOneNewProject' do
   # Pods for BlockOneNewProject
 
 pod 'Alamofire', '~> 5.5'
+pod 'SwiftLint'
 
 end

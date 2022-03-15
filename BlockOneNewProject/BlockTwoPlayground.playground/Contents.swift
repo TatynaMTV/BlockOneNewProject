@@ -2,17 +2,18 @@ import UIKit
 
 // Задание #1. Вычислить среднее значение двух переменных типа Double
 
-let a = 2.1
-let b = 3.7
+let firstLet = 2.1
+let secondLet = 3.7
 
-var avarage = (a + b) / 2
+var avarage = (firstLet + secondLet) / 2
 
 // Задание #2. Создать кортеж со строковыми значениями и вывести их на консоль
 
 var (firstName, lastName) = ("Nikita", "Petrov")
 print("Full name: \(firstName) \(lastName)")
 
-// Задание #3. Создать две опциональные переменные типа Float. Одной из них задать первоначальное значение. Написать функцию, которая принимает на вход опциональную переменную типа Float. Функция должна безопасно извлечь значение из входящей переменной. Если значение удалось получить - необходимо вывести его в консоль, если значение у переменной отсутствует вывести в консоль фразу "Variable can't be unwrapped". Вызвать функцию дважды с двумя ранее созданными переменными.
+// Задание #3. Создать две опциональные переменные типа Float. Одной из них задать первоначальное значение. Написать функцию, которая принимает на вход опциональную переменную типа Float.
+// Функция должна безопасно извлечь значение из входящей переменной. Если значение удалось получить - необходимо вывести его в консоль, если значение у переменной отсутствует вывести в консоль фразу "Variable can't be unwrapped". Вызвать функцию дважды с двумя ранее созданными переменными.
 
 let firstVar: Float? = 1.8
 let secondVar: Float? = nil
@@ -30,7 +31,7 @@ unwrapped(variable: secondVar)
 
 // Задание #4. Напиcать программу для вывода первых 15 чисел последовательности Фибоначчи
 
-func fibonacci(n: Int) -> [Int] {
+func fibonacci(nunber: Int) -> [Int] {
     var array = [0, 1]
     while array.count < n {
         array.append(array[array.count - 1] + array[array.count - 2])
@@ -43,12 +44,12 @@ fibonacci(n: 15)
 // Задание #5. Напишите программу для сортировки массива, использующую метод пузырька. Сортировка должна происходить в отдельной функции, принимающей на вход исходный массив.
 
 func bubbleSort<T: Comparable>(array: inout [T]) -> [T] {
-    for i in 0..<array.count {
-        for j in 1..<array.count - i {
-            if array[j] < array[j - 1] {
-                let temp = array[j - 1]
-                array[j - 1] = array[j]
-                array[j] = temp
+    for index in 0..<array.count {
+        for object in 1..<array.count - index {
+            if array[object] < array[object - 1] {
+                let temp = array[object - 1]
+                array[object - 1] = array[object]
+                array[object] = temp
             }
         }
     }
