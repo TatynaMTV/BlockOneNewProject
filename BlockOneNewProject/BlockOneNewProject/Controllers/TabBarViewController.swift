@@ -14,6 +14,8 @@ class TabBarController: UITabBarController {
   var circleRadius: CGFloat = 26
   var shapeLayer: CALayer?
   var circleLayer: CALayer?
+  
+  let titleLabel = UILabel()
 
   let middleButton = UIButton()
   let buttonImage = UIImageView()
@@ -28,7 +30,7 @@ class TabBarController: UITabBarController {
     setupNavigationBar()
     setConstraints()
   }
-
+  
   func setupTabBar() {
     let vc1 = UIViewController()
     let vc2 = UIViewController()
@@ -60,12 +62,16 @@ class TabBarController: UITabBarController {
     tabBar.standardAppearance = appearance
     tabBar.scrollEdgeAppearance = tabBar.standardAppearance
     tabBar.tintColor = .greenLeaf()
+    UITabBar.appearance().barTintColor = .white
   }
 
   // MARK: - Setup Navigation Bar
 
   func setupNavigationBar() {
-    UITabBar.appearance().barTintColor = .white
+    
+    titleLabel.textColor = .white
+    titleLabel.font = UIFont(name: "OfficinaSansExtraBoldSCC", size: 21)
+    
     let appearance = UINavigationBarAppearance()
     appearance.configureWithOpaqueBackground()
     appearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont(name: "OfficinaSansExtraBoldSCC", size: 21) ?? UIFont.systemFont(ofSize: 21, weight: .bold)]
@@ -73,6 +79,7 @@ class TabBarController: UITabBarController {
     UIWindow.appearance().overrideUserInterfaceStyle = .light
     UINavigationBar.appearance().standardAppearance = appearance
     UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    
   }
 
   // MARK: - Middle button
@@ -80,7 +87,7 @@ class TabBarController: UITabBarController {
   func setupMiddleButton() {
 
     middleButton.layer.cornerRadius = middleButtonDiameter/2
-    middleButton.backgroundColor = .melon()
+    middleButton.backgroundColor = .greenLeaf()
     middleButton.translatesAutoresizingMaskIntoConstraints = false
 
     buttonImage.image = UIImage(systemName: "heart.fill")

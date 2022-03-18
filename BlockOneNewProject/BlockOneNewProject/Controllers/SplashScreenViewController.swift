@@ -31,6 +31,7 @@ class SplashScreenViewController: UIViewController {
   private func presentNextController() {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       let viewController = TabBarController()
+      viewController.selectedIndex = 2
       viewController.modalTransitionStyle = .coverVertical
       viewController.modalPresentationStyle = .fullScreen
       self.present(viewController, animated: false)
