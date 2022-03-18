@@ -1050,7 +1050,7 @@ open class Session {
     func performSetupOperations(for request: Request,
                                 convertible: URLRequestConvertible,
                                 shouldCreateTask: @escaping () -> Bool = { true })
-    {
+    {                                                                                 // swiftlint:disable:this opening_brace
         dispatchPrecondition(condition: .onQueue(requestQueue))
 
         let initialRequest: URLRequest

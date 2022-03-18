@@ -55,9 +55,7 @@ open class NetworkReachabilityManager {
 
         /// Defines the various connection types detected by reachability flags.
         public enum ConnectionType {
-            /// The connection type is either over Ethernet or WiFi.
             case ethernetOrWiFi
-            /// The connection type is a cellular connection.
             case cellular
         }
     }

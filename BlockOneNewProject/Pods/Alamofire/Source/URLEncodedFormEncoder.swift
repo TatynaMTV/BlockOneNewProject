@@ -406,7 +406,7 @@ public final class URLEncodedFormEncoder {
     }
 }
 
-final class _URLEncodedFormEncoder {
+final class _URLEncodedFormEncoder { // swiftlint:disable:this type_name
     var codingPath: [CodingKey]
     // Returns an empty dictionary, as this encoder doesn't support userInfo.
     var userInfo: [CodingUserInfoKey: Any] { [:] }

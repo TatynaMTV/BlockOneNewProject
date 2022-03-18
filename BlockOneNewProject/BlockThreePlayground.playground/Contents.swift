@@ -14,11 +14,11 @@ func repeatTask (times: Int, task: () -> Void) {
 
 repeatTask(times: 10, task: myClosure)
 
-// Задание #2. Условия: есть начальная позиция на двумерной плоскости, можно осуществлять последовательность шагов по четырем направлениям up, down, left, right. Размерность каждого шага равна 1. Создать перечисление Directions с направлениями движения. Создать переменную location с начальными координатами (0,0), создать массив элементами которого будут направления из перечисления. Положить в этот массив следующую последовательность шагов: [.up, .up, .left, .down, .left, .down, .down, .right, .right, .down, .right]. Програмно вычислить какие будут координаты у переменной location после выполнения этой последовательности шагов.
-
+// Задание #2. Условия: есть начальная позиция на двумерной плоскости, можно осуществлять последовательность шагов по четырем направлениям up, down, left, right. Размерность каждого шага равна 1. Создать перечисление Directions с направлениями движения.
+// Создать переменную location с начальными координатами (0,0), создать массив элементами которого будут направления из перечисления. Положить в этот массив следующую последовательность шагов: [.up, .up, .left, .down, .left, .down, .down, .right, .right, .down, .right]. Програмно вычислить какие будут координаты у переменной location после выполнения этой последовательности шагов.
 
 enum Directions {
-    case up
+    case up   // swiftlint:disable:this identifier_name
     case down
     case left
     case right
@@ -28,9 +28,9 @@ var location = (0, 0)
 let stepsArray: [Directions] = [.up, .up, .left, .down, .left, .down, .down, .right, .right, .down, .right]
 
 func steps(point: (Int, Int), steps: [Directions]) -> (Int, Int) {
-    var x = point.0
-    var y = point.1
-    
+  var x = point.0 // swiftlint:disable:this identifier_name
+  var y = point.1 // swiftlint:disable:this identifier_name
+
     for step in steps {
         switch step {
         case .up: y += 1
@@ -39,24 +39,23 @@ func steps(point: (Int, Int), steps: [Directions]) -> (Int, Int) {
         case .right: x += 1
         }
     }
-    
+
     let newPoint = (x, y)
     return newPoint
 }
 
 var newLocation = steps(point: location, steps: stepsArray)
 
-
 // Задание #3. Создать класс Rectangle с двумя неопциональными свойствами: ширина и длина. Реализовать в этом классе метод вычисляющий и выводящий в консоль периметр прямоугольника. Создать экземпляр класса и вызвать у него этот метод.
 
 class Rectangle {
     var length: Float
     var width: Float
-    init(length: Float,width: Float) {
+    init(length: Float, width: Float) {
         self.length = length
         self.width = width
     }
-    
+
     func perimetr() {
         let perimetr = 2 * (length + width)
         print(perimetr)
