@@ -1,19 +1,19 @@
 //
-//  HelpCategoriesViewController.swift
+//  AidCategoryViewController.swift
 //  BlockOneNewProject
 //
-//  Created by Татьяна Мальчик on 12.03.2022.
+//  Created by Татьяна Мальчик on 22.03.2022.
 //
 
 import UIKit
 
-struct HelpCategories {
+struct AidCategories {
   let image: UIImage?
   let name: String
 }
 
-class HelpCategoriesViewController: UIViewController {
-
+class AidCategoryViewController: UIViewController {
+  
   private let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "Выберите категорию помощи"
@@ -22,14 +22,14 @@ class HelpCategoriesViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   private let collectionView: UICollectionView = {
     let viewLayout = UICollectionViewFlowLayout()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
-
+  
   private let barButtonItem: UIButton = {
     let barButton = UIButton.init(type: .custom)
     barButton.setBackgroundImage(UIImage(systemName: "chevron.backward"), for: .normal)
@@ -37,76 +37,103 @@ class HelpCategoriesViewController: UIViewController {
     barButton.tintColor = .white
     return barButton
   }()
-
-  private let cellID = "HelpCategoryID"
-
-  let categories: [HelpCategories] = [
-    HelpCategories(image: UIImage(named: "children"), name: "Дети"),
-    HelpCategories(image: UIImage(named: "adults"), name: "Взрослые"),
-    HelpCategories(image: UIImage(named: "elderly"), name: "Пожилые"),
-    HelpCategories(image: UIImage(named: "animals"), name: "Животные"),
-    HelpCategories(image: UIImage(named: "events"), name: "События")
+  
+  private let cellID = "AidCategoryID"
+  
+  let categories: [AidCategories] = [
+    AidCategories(image: UIImage(named: "children"), name: "Дети"),
+    AidCategories(image: UIImage(named: "adults"), name: "Взрослые"),
+    AidCategories(image: UIImage(named: "elderly"), name: "Пожилые"),
+    AidCategories(image: UIImage(named: "animals"), name: "Животные"),
+    AidCategories(image: UIImage(named: "events"), name: "События")
   ]
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     title = "Помочь"
     
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: barButtonItem)
-
+  
     setupViews()
     setConstraints()
   }
 }
 
-extension HelpCategoriesViewController: UICollectionViewDataSource {
+// MARK: - DataSource & Delegate
+
+extension AidCategoryViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return categories.count
   }
-
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! HelpCategoryCollectionViewCell // swiftlint:disable:this force_cast
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AidCategoryCollectionViewCell // swiftlint:disable:this force_cast
     cell.setup(with: categories[indexPath.row])
     return cell
   }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let nextVC = CharityEventsViewController()
+    nextVC.title = categories[indexPath.row].name
+    navigationController?.pushViewController(nextVC, animated: true)
+  }
 }
 
-extension HelpCategoriesViewController: UICollectionViewDelegateFlowLayout {
+extension AidCategoryViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let width = UIScreen.main.bounds.size.width / 2 - 15
     let height = CGFloat(160)
-
+    
     return CGSize(width: width, height: height)
   }
 }
 
 // MARK: - Create UI elements & set constraints
 
-extension HelpCategoriesViewController {
-
+extension AidCategoryViewController {
+  
   private func setupViews() {
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.register(HelpCategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+    collectionView.register(AidCategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
   }
-
+  
   // Set constraints
   private func setConstraints() {
     view.addSubview(titleLabel)
-
+    
     NSLayoutConstraint.activate([
       titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 17),
       titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
     ])
-
+    
     view.addSubview(collectionView)
-
+    
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 17),
       collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 9),
       collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -9)
     ])
+  }
+}
+
+// MARK: - SwiftUI Canvas
+import SwiftUI
+struct AidProvider: PreviewProvider {
+  static var previews: some View {
+    ContainterView().edgesIgnoringSafeArea(.all)
+  }
+  
+  struct ContainterView: UIViewControllerRepresentable {
+    
+    let viewController = AidCategoryViewController()
+    func makeUIViewController(context: UIViewControllerRepresentableContext<AidProvider.ContainterView>) -> AidCategoryViewController {
+      return viewController
+    }
+    
+    func updateUIViewController(_ uiViewController: AidProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<AidProvider.ContainterView>) {
+    }
   }
 }

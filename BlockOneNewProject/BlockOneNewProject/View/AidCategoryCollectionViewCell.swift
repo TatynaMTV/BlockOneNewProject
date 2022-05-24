@@ -1,5 +1,5 @@
 //
-//  HelpCategoryCollectionViewCell.swift
+//  AidCategoryCollectionViewCell.swift
 //  BlockOneNewProject
 //
 //  Created by Татьяна Мальчик on 14.03.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HelpCategoryCollectionViewCell: UICollectionViewCell {
+class AidCategoryCollectionViewCell: UICollectionViewCell {
 
   var categoryImageView: UIImageView = {
     let imageView = UIImageView()
@@ -23,6 +23,8 @@ class HelpCategoryCollectionViewCell: UICollectionViewCell {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
+  
+  private let cellID = "AidCategoryID"
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -34,7 +36,7 @@ class HelpCategoryCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func setup(with categories: HelpCategories) {
+  func setup(with categories: AidCategories) {
     categoryImageView.image = categories.image
     titleLabel.text = categories.name
   }
