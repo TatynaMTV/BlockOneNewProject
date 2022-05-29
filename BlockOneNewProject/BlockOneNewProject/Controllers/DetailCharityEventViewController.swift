@@ -35,12 +35,12 @@ class DetailCharityEventViewController: UIViewController {
       return barButton
     }()
     
-    public let titleNameLabel = UILabel(text: "",
+    public let titleNameLabel = UILabel(text: "Спонсоры отремонтируют школу-интернат",
                                          font: UIFont(name: "OfficinaSansExtraBoldSCC", size: 25),
                                          color: .blueGrey(),
                                          numberOfLines: 2)
     private let calendarImageView = UIImageView()
-    public let countdownTimerLabel = UILabel(text: "",
+    public let countdownTimerLabel = UILabel(text: "Осталось 13 дней (21.09 – 20.10)",
                                               font: .systemFont(ofSize: 11),
                                               color: .gray,
                                               numberOfLines: 1)
@@ -100,8 +100,6 @@ class DetailCharityEventViewController: UIViewController {
         UIImage(named: "image4")
     ].compactMap({ $0 })
     
-    let data = DataLoader().categoryData
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -116,7 +114,7 @@ class DetailCharityEventViewController: UIViewController {
         setConstraints()
     }
     
-    // Cerate stackView for participants photo
+    // Cerate stackView for photos
     
     func createParticipantsStackView() {
         for index in 0..<5 {
@@ -133,7 +131,6 @@ class DetailCharityEventViewController: UIViewController {
             participantsCountStackView.addArrangedSubview(view)
         }
     }
-    
 // MARK: - Create compositional layout
     
     func setupCollectionView() {
@@ -240,7 +237,7 @@ extension DetailCharityEventViewController {
         
         descriptionEvent.text = """
         Участники и болельщики смогли весело и активно провести время на «Петербургском благотворительном марафоне» и при этом финансово поучаствовать в помощи детям.
-
+        
         При этом финансово поучаствовать в помощи детям. При этом финансово поучаствовать в помощи детям.
         """
         descriptionEvent.textColor = .charcoalGrey()
