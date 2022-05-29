@@ -29,13 +29,6 @@ class CharityEventCollectionViewCell: UICollectionViewCell {
   required init?(coder: NSCoder) {
     fatalError()
   }
-  
-  func setup(with events: CharityEvents) {
-    imageView.image = events.image
-    titleLabel.text = events.titleLable
-    textLabel.text = events.textLable
-    bottomDateLabel.text = events.bottomLabel
-  }
 }
 
 // MARK: - Set View & Constraints

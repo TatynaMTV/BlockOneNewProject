@@ -38,8 +38,6 @@ class AidCategoryViewController: UIViewController {
     return barButton
   }()
   
-  private let cellID = "AidCategoryID"
-  
   let categories: [AidCategories] = [
     AidCategories(image: UIImage(named: "children"), name: "Дети"),
     AidCategories(image: UIImage(named: "adults"), name: "Взрослые"),
@@ -68,7 +66,7 @@ extension AidCategoryViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! AidCategoryCollectionViewCell // swiftlint:disable:this force_cast
+      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AidCategoryCollectionViewCell.identifire, for: indexPath) as! AidCategoryCollectionViewCell // swiftlint:disable:this force_cast
     cell.setup(with: categories[indexPath.row])
     return cell
   }
@@ -96,7 +94,7 @@ extension AidCategoryViewController {
   private func setupViews() {
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.register(AidCategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+      collectionView.register(AidCategoryCollectionViewCell.self, forCellWithReuseIdentifier: AidCategoryCollectionViewCell.identifire)
   }
   
   // Set constraints
