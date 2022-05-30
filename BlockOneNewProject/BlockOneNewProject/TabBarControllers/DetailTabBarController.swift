@@ -40,6 +40,7 @@ class DetailTabBarController: UITabBarController {
         UITabBar.appearance().barTintColor = .white
         
         var index: CGFloat = 4
+        
         for _ in 0..<3 {
             let verticalLine = CALayer()
             if index == 3 {
@@ -50,7 +51,6 @@ class DetailTabBarController: UITabBarController {
             verticalLine.backgroundColor = UIColor(red: 232/255, green: 237/255, blue: 237/255, alpha: 0.7).cgColor
             self.tabBar.layer.addSublayer(verticalLine)
             index -= 1
-//            print(index)
         }
     }
     
