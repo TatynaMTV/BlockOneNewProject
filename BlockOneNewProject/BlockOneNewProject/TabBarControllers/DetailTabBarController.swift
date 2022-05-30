@@ -50,7 +50,7 @@ class DetailTabBarController: UITabBarController {
             verticalLine.backgroundColor = UIColor(red: 232/255, green: 237/255, blue: 237/255, alpha: 0.7).cgColor
             self.tabBar.layer.addSublayer(verticalLine)
             index -= 1
-            print(index)
+//            print(index)
         }
     }
     
