@@ -9,16 +9,16 @@ import UIKit
 
 struct CategoryModel: Decodable {
     var title: String
-    var info: String
-    var time: String
     var events: [Event]
 }
 
 struct Event: Decodable {
     var id: Int
     var name: String
+    var time: String
     var fond: String
     var address: String
     var telephone: String
+    var info: String
     var information: String
 }

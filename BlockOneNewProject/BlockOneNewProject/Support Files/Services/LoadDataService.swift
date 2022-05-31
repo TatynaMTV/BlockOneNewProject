@@ -11,10 +11,10 @@ public class DataLoader {
     @Published var categoryData = [CategoryModel]()
     
     init() {
-        load()
+        loadCategory()
     }
     
-    func load() {
+    func loadCategory() {
         if let fileLocation = Bundle.main.url(forResource: "category", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: fileLocation)

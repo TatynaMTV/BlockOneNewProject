@@ -83,16 +83,18 @@ class DetailCharityEventViewController: UIViewController {
     }()
     private let participsntsCounter = UILabel(text: "+102", font: .systemFont(ofSize: 13), color: .gray, numberOfLines: 1)
     
-    private let webLabelBackgroung = UIView()
-    private let webLabel = UILabel(text: "Перейти на сайт организации",
-                                   font: .systemFont(ofSize: 18),
-                                   color: .greenLeaf(),
-                                   numberOfLines: 1)
+    private let huperTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "Перейти на сайт организации"
+        return textView
+    }()
     
     private let photosContainerView = UIView()
     private var photosEvent: UICollectionView!
     
     private let descriptionEvent = UITextView()
+    
+    let data = DataLoader().categoryData
 
     let images: [UIImage] = [
         UIImage(named: "image1"),
@@ -112,6 +114,8 @@ class DetailCharityEventViewController: UIViewController {
         setupView()
         setupCollectionView()
         setConstraints()
+        
+        createHuperText()
     }
     
     // Cerate stackView for photos
@@ -131,6 +135,15 @@ class DetailCharityEventViewController: UIViewController {
             participantsCountStackView.addArrangedSubview(view)
         }
     }
+    
+    // HuperText
+    func createHuperText() {
+        let attributeString = NSMutableAttributedString(string: "Перейти на сайт организации")
+        attributeString.addAttribute(.link, value: "https://www.google.com", range: NSRange(location: 0, length: 27))
+        huperTextView.attributedText = attributeString
+        
+    }
+    
 // MARK: - Create compositional layout
     
     func setupCollectionView() {
@@ -172,6 +185,15 @@ class DetailCharityEventViewController: UIViewController {
     }
 }
 
+// MARK: - TExt View Delegate
+
+extension DetailCharityEventViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        UIApplication.shared.open(URL)
+        return false
+    }
+}
+
 // MARK: - CollectionViewDelegate & CollectionViewDataSource
 
 extension DetailCharityEventViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -190,6 +212,7 @@ extension DetailCharityEventViewController: UICollectionViewDelegate, UICollecti
 
 extension DetailCharityEventViewController {
     private func setupView() {
+        
         calendarImageView.image = UIImage(systemName: "calendar")
         calendarImageView.tintColor = .gray
         calendarImageView.contentMode = .scaleAspectFill
@@ -200,6 +223,7 @@ extension DetailCharityEventViewController {
                                               axis: .horizontal,
                                               spacing: 10,
                                               distribution: .fillProportionally)
+        
         locationImageView.image = UIImage(systemName: "location.fill")
         locationImageView.tintColor = .charcoalGrey()
         locationImageView.contentMode = .scaleAspectFit
@@ -248,8 +272,8 @@ extension DetailCharityEventViewController {
         participsntsView.backgroundColor = .lightGrey()
         participsntsView.translatesAutoresizingMaskIntoConstraints = false
         
-        webLabelBackgroung.backgroundColor = .white
-        webLabelBackgroung.translatesAutoresizingMaskIntoConstraints = false
+        huperTextView.backgroundColor = .white
+        huperTextView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func setConstraints() {
@@ -320,20 +344,13 @@ extension DetailCharityEventViewController {
             descriptionEvent.heightAnchor.constraint(equalToConstant: 300)
         ])
         
-        view.addSubview(webLabelBackgroung)
+        view.addSubview(huperTextView)
         
         NSLayoutConstraint.activate([
-            webLabelBackgroung.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
-            webLabelBackgroung.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            webLabelBackgroung.widthAnchor.constraint(equalTo: view.widthAnchor),
-            webLabelBackgroung.heightAnchor.constraint(equalToConstant: 55)
-        ])
-        
-        webLabelBackgroung.addSubview(webLabel)
-        
-        NSLayoutConstraint.activate([
-            webLabel.topAnchor.constraint(equalTo: webLabelBackgroung.topAnchor, constant: 16),
-            webLabel.leadingAnchor.constraint(equalTo: webLabelBackgroung.leadingAnchor, constant: 20)
+            huperTextView.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -200),
+            huperTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            huperTextView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
+            huperTextView.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         view.addSubview(participsntsView)

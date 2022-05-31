@@ -7,13 +7,6 @@
 
 import UIKit
 
-struct CharityEvents {
-    let image: UIImage?
-    let titleLable: String
-    let textLable: String
-    let timeLabel: String
-}
-
 class CharityEventsViewController: UIViewController {
     
     private let backView: UIView = {
@@ -86,8 +79,8 @@ extension CharityEventsViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CharityEventCollectionViewCell // swiftlint:disable:this force_cast
-        let model = data[indexPath.row]
-        cell.titleLabel.text = model.title
+        let model = data[indexPath.row].events[indexPath.row]
+        cell.titleLabel.text = model.name
         cell.textLabel.text = model.info
         cell.bottomDateLabel.text = model.time
         cell.imageView.image = titlePhoto[indexPath.row]
@@ -97,10 +90,10 @@ extension CharityEventsViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = data[indexPath.row]
+        let model = data[indexPath.row].events[indexPath.row]
         let detailVC = DetailCharityEventViewController()
-        detailVC.title = model.title
-        detailVC.titleNameLabel.text = model.title
+        detailVC.title = model.name
+        detailVC.titleNameLabel.text = model.name
         detailVC.countdownTimerLabel.text = model.time
         navigationController?.pushViewController(detailVC, animated: true)
     }

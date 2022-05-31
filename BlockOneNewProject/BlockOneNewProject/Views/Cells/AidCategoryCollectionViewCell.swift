@@ -37,11 +37,6 @@ class AidCategoryCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(with categories: AidCategories) {
-        categoryImageView.image = categories.image
-        titleLabel.text = categories.name
-    }
-    
     // MARK: - Set constraints
     
     func setContsraints() {
