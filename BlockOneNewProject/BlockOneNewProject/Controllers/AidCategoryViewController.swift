@@ -32,16 +32,8 @@ class AidCategoryViewController: UIViewController {
         barButton.tintColor = .white
         return barButton
     }()
-    
-    private let titlePhoto: [UIImage] = [
-        UIImage(named: "children"),
-        UIImage(named: "adults"),
-        UIImage(named: "elderly"),
-        UIImage(named: "animals"),
-        UIImage(named: "events")
-    ].compactMap({ $0 })
-    
-    let data = DataLoader().categoryData
+
+    let categoryData = DataLoader().loadCategory(fileName: "category")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,19 +51,20 @@ class AidCategoryViewController: UIViewController {
 
 extension AidCategoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return categoryData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AidCategoryCollectionViewCell.identifire, for: indexPath) as! AidCategoryCollectionViewCell // swiftlint:disable:this force_cast
-        cell.categoryImageView.image = titlePhoto[indexPath.row]
-        cell.titleLabel.text = data[indexPath.row].title
+        let model = categoryData?[indexPath.row]
+        cell.categoryImageView.image = UIImage(named: model?.image ?? "adult")
+        cell.titleLabel.text = model?.title
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = CharityEventsViewController()
-        nextVC.title = data[indexPath.row].title
+        nextVC.title = categoryData?[indexPath.row].title
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }

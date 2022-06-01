@@ -8,17 +8,6 @@
 import UIKit
 
 struct CategoryModel: Decodable {
+    var image: String
     var title: String
-    var events: [Event]
-}
-
-struct Event: Decodable {
-    var id: Int
-    var name: String
-    var time: String
-    var fond: String
-    var address: String
-    var telephone: String
-    var info: String
-    var information: String
 }

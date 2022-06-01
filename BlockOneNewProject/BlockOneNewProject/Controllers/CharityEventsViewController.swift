@@ -45,7 +45,7 @@ class CharityEventsViewController: UIViewController {
         UIImage(named: "image2")
     ].compactMap({ $0 })
     
-    let data = DataLoader().categoryData
+    let eventData = DataLoader().loadEvent(fileName: "event")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,13 +56,10 @@ class CharityEventsViewController: UIViewController {
         navigationController?.navigationBar.backItem?.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
+        segmentedControl.addTarget(self, action: #selector(changedValue), for: .valueChanged)
+        
         setupViews()
         setConstraints()
-        
-        let data = DataLoader().categoryData
-        print(data)
-        
-        segmentedControl.addTarget(self, action: #selector(changedValue), for: .valueChanged)
     }
     
     @objc private func changedValue() {
@@ -79,22 +76,26 @@ extension CharityEventsViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CharityEventCollectionViewCell // swiftlint:disable:this force_cast
-        let model = data[indexPath.row].events[indexPath.row]
-        cell.titleLabel.text = model.name
-        cell.textLabel.text = model.info
-        cell.bottomDateLabel.text = model.time
-        cell.imageView.image = titlePhoto[indexPath.row]
+        let model = eventData?[indexPath.row]
+        cell.titleLabel.text = model?.name
+        cell.textLabel.text = model?.info
+        cell.bottomDateLabel.text = model?.time
+        cell.imageView.image = UIImage(named: model?.image ?? "image1")
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = true
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = data[indexPath.row].events[indexPath.row]
+        let model = eventData?[indexPath.row]
         let detailVC = DetailCharityEventViewController()
-        detailVC.title = model.name
-        detailVC.titleNameLabel.text = model.name
-        detailVC.countdownTimerLabel.text = model.time
+        
+        detailVC.title = model?.name
+        detailVC.titleNameLabel.text = model?.name
+        detailVC.countdownTimerLabel.text = model?.time
+        detailVC.fondNameLable.text = model?.fond
+        detailVC.addressLabel.text = model?.address
+        detailVC.phoneLabel.text = model?.phone
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

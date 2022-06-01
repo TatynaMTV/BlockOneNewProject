@@ -46,21 +46,21 @@ class DetailCharityEventViewController: UIViewController {
                                               numberOfLines: 1)
     private var countdownTimerStackView = UIStackView()
     
-    private let fondNameLable = UILabel(text: "Благотворительный фонд «Счастливый Мир»",
+    public let fondNameLable = UILabel(text: "Благотворительный фонд «Счастливый Мир»",
                                         font: .systemFont(ofSize: 13),
                                         color: .charcoalGrey(),
                                         numberOfLines: 1)
     
     private var locationStackView = UIStackView()
     private let locationImageView = UIImageView()
-    private let addressLabel = UILabel(text: "Санкт-Петербург, Кирочная улица, д. 50А, каб. 208",
+    public let addressLabel = UILabel(text: "Санкт-Петербург, Кирочная улица, д. 50А, каб. 208",
                                        font: .systemFont(ofSize: 20),
                                        color: .charcoalGrey(),
                                        numberOfLines: 2)
     
     private var phoneStackView = UIStackView()
     private let phoneImageView = UIImageView()
-    private let phoneLabel = UILabel(text: "+7 (937) 037 37-73\n+7 (937) 016 16-16",
+    public let phoneLabel = UILabel(text: "+7 (937) 037 37-73\n+7 (937) 016 16-16",
                                      font: .systemFont(ofSize: 20),
                                      color: .charcoalGrey(),
                                      numberOfLines: 2)
@@ -93,8 +93,6 @@ class DetailCharityEventViewController: UIViewController {
     private var photosEvent: UICollectionView!
     
     private let descriptionEvent = UITextView()
-    
-    let data = DataLoader().categoryData
 
     let images: [UIImage] = [
         UIImage(named: "image1"),
