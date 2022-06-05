@@ -9,27 +9,12 @@ import Foundation
 
 public class DataLoader {
     
-    func loadCategory(fileName: String) -> [CategoryModel]? {
+    func getType<T: Decodable>(type: T.Type, fileName: String) -> [T]? {
         if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let jsonDecoder = JSONDecoder()
-                let dataFromJson = try jsonDecoder.decode([CategoryModel].self, from: data)
-                print(dataFromJson)
-                return dataFromJson
-            } catch let jsonError {
-                print("Faild to decode JSON", jsonError)
-            }
-        }
-        return nil
-    }
-    
-    func loadEvent(fileName: String) -> [EventModel]? {
-        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let jsonDecoder = JSONDecoder()
-                let dataFromJson = try jsonDecoder.decode([EventModel].self, from: data)
+                let dataFromJson = try jsonDecoder.decode([T].self, from: data)
                 print(dataFromJson)
                 return dataFromJson
             } catch let jsonError {

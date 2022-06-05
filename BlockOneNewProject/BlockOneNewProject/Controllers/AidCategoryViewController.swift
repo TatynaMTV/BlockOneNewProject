@@ -33,7 +33,7 @@ class AidCategoryViewController: UIViewController {
         return barButton
     }()
 
-    let categoryData = DataLoader().loadCategory(fileName: "category")
+    let categoryData = DataLoader().getType(type: CategoryModel.self, fileName: "category")
     
     override func viewDidLoad() {
         super.viewDidLoad()

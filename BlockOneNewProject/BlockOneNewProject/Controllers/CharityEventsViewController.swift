@@ -45,7 +45,7 @@ class CharityEventsViewController: UIViewController {
         UIImage(named: "image2")
     ].compactMap({ $0 })
     
-    let eventData = DataLoader().loadEvent(fileName: "event")
+    let eventData = DataLoader().getType(type: EventModel.self, fileName: "event")
     
     override func viewDidLoad() {
         super.viewDidLoad()
