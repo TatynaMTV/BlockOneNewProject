@@ -175,6 +175,7 @@
 				E2228969284385F000056BE5 /* TabBarControllers */,
 				E2D6942027DB564300AA1F97 /* Controllers */,
 				E21ADDD827EB99CA00FB6A86 /* Models */,
+				E2014C822840012D002AC49E /* Services */,
 				E2A8F0AE27DFC740000F611B /* Extentions */,
 				E2D555C727CDA0B9000EC5C9 /* Info.plist */,
 			);
@@ -184,7 +185,6 @@
 		E2D6941D27DB54A400AA1F97 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				E2014C822840012D002AC49E /* Services */,
 				E2D6942627DB8D9400AA1F97 /* Fonts */,
 				E2D555B927CDA0B7000EC5C9 /* AppDelegate.swift */,
 				E2D555BB27CDA0B7000EC5C9 /* SceneDelegate.swift */,
