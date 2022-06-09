@@ -33,13 +33,13 @@ unwrapped(variable: secondVar)
 
 func fibonacci(nunber: Int) -> [Int] {
     var array = [0, 1]
-    while array.count < n {
+    while array.count < nunber {
         array.append(array[array.count - 1] + array[array.count - 2])
     }
     return array
 }
 
-fibonacci(n: 15)
+fibonacci(nunber: 15)
 
 // Задание #5. Напишите программу для сортировки массива, использующую метод пузырька. Сортировка должна происходить в отдельной функции, принимающей на вход исходный массив.
 

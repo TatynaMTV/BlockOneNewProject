@@ -35,17 +35,21 @@ class CharityEventsViewController: UIViewController {
         return barButton
     }()
     
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .gray
+        spinner.startAnimating()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     private var segmentedControl = UISegmentedControl()
     
     private let cellID = "CharityEvent"
     private let items = ["Текущие", "Завершенные"]
     
-    private let titlePhoto: [UIImage] = [
-        UIImage(named: "image1"),
-        UIImage(named: "image2")
-    ].compactMap({ $0 })
-    
-    let eventData = DataLoader().getType(type: EventModel.self, fileName: "event")
+    var event: [EventModel]?
+    let dataLoader = DataLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +60,22 @@ class CharityEventsViewController: UIViewController {
         navigationController?.navigationBar.backItem?.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
-        segmentedControl.addTarget(self, action: #selector(changedValue), for: .valueChanged)
-        
         setupViews()
         setConstraints()
-    }
-    
-    @objc private func changedValue() {
-        print("Changed")
+        
+        // download data
+        dataLoader.getCategoryType(type: EventModel.self, fileName: "event", format: "json") { result in
+            switch result {
+            case .success(let event):
+                self.event = event
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("error:", error)
+            }
+        }
     }
 }
 
@@ -76,7 +88,7 @@ extension CharityEventsViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CharityEventCollectionViewCell // swiftlint:disable:this force_cast
-        let model = eventData?[indexPath.row]
+        let model = event?[indexPath.row]
         cell.titleLabel.text = model?.name
         cell.textLabel.text = model?.info
         cell.bottomDateLabel.text = model?.time
@@ -87,7 +99,7 @@ extension CharityEventsViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = eventData?[indexPath.row]
+        let model = event?[indexPath.row]
         let detailVC = DetailCharityEventViewController()
         
         detailVC.title = model?.name

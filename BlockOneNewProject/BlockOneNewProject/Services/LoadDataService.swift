@@ -9,18 +9,17 @@ import Foundation
 
 public class DataLoader {
     
-    func getType<T: Decodable>(type: T.Type, fileName: String) -> [T]? {
-        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
+    func getCategoryType<T: Decodable>(type: T.Type, fileName: String, format: String, completion: @escaping (Result<[T]?, Error>) -> Void) {
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: format) else { return }
+        DispatchQueue.global(qos: .background).async {
             do {
-                let data = try Data(contentsOf: url)
-                let jsonDecoder = JSONDecoder()
-                let dataFromJson = try jsonDecoder.decode([T].self, from: data)
-                print(dataFromJson)
-                return dataFromJson
+                guard let data = try? Data(contentsOf: url) else {return}
+                let dataFromJson = try JSONDecoder().decode([T].self, from: data)
+                completion(.success(dataFromJson))
             } catch let jsonError {
                 print("Faild to decode JSON", jsonError)
+                completion(.failure(jsonError))
             }
         }
-        return nil
     }
 }

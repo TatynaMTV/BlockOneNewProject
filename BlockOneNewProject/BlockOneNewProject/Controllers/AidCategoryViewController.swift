@@ -32,8 +32,17 @@ class AidCategoryViewController: UIViewController {
         barButton.tintColor = .white
         return barButton
     }()
-
-    let categoryData = DataLoader().getType(type: CategoryModel.self, fileName: "category")
+    
+    private var spinner: UIActivityIndicatorView = {
+        var spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .gray
+        spinner.startAnimating()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
+    var category: [CategoryModel]?
+    let dataLoader = DataLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +50,19 @@ class AidCategoryViewController: UIViewController {
         title = "Помочь"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: barButtonItem)
+        
+        dataLoader.getCategoryType(type: CategoryModel.self, fileName: "category", format: "json") { [weak self] result in
+            switch result {
+            case .success(let category):
+                self?.category = category
+                DispatchQueue.main.async {
+                    self?.spinner.stopAnimating()
+                    self?.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print("error:", error)
+            }
+        }
         
         setupViews()
         setConstraints()
@@ -51,20 +73,21 @@ class AidCategoryViewController: UIViewController {
 
 extension AidCategoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categoryData?.count ?? 0
+        return category?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AidCategoryCollectionViewCell.identifire, for: indexPath) as! AidCategoryCollectionViewCell // swiftlint:disable:this force_cast
-        let model = categoryData?[indexPath.row]
+        let model = category?[indexPath.row]
         cell.categoryImageView.image = UIImage(named: model?.image ?? "adult")
         cell.titleLabel.text = model?.title
+
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = CharityEventsViewController()
-        nextVC.title = categoryData?[indexPath.row].title
+        nextVC.title = category?[indexPath.row].title
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -105,24 +128,13 @@ extension AidCategoryViewController {
             collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 9),
             collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -9)
         ])
-    }
-}
-
-// MARK: - SwiftUI Canvas
-import SwiftUI
-struct AidProvider: PreviewProvider {
-    static var previews: some View {
-        ContainterView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainterView: UIViewControllerRepresentable {
         
-        let viewController = AidCategoryViewController()
-        func makeUIViewController(context: UIViewControllerRepresentableContext<AidProvider.ContainterView>) -> AidCategoryViewController {
-            return viewController
-        }
+        view.addSubview(spinner)
         
-        func updateUIViewController(_ uiViewController: AidProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<AidProvider.ContainterView>) {
-        }
+        NSLayoutConstraint.activate([
+            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            spinner.widthAnchor.constraint(equalToConstant: 25)
+        ])
     }
 }
