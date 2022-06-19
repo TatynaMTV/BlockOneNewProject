@@ -8,7 +8,7 @@
 import Foundation
 
 struct EventModel: Decodable {
-    var id: Int
+    var id: Int16
     var image: String
     var name: String
     var time: String

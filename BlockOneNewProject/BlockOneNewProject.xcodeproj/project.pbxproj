@@ -37,6 +37,8 @@
 		E2ED4844285FC4B00029CC09 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E2ED4843285FC4B00029CC09 /* Realm */; };
 		E2ED4846285FC4B00029CC09 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E2ED4845285FC4B00029CC09 /* RealmSwift */; };
 		E2ED4855285FC9C90029CC09 /* BlockOneNewProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2ED4853285FC9C90029CC09 /* BlockOneNewProject.xcdatamodeld */; };
+		E2ED4858285FCD960029CC09 /* CategoryModelRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ED4857285FCD960029CC09 /* CategoryModelRealm.swift */; };
+		E2ED485A285FCDAA0029CC09 /* EventModelRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ED4859285FCDAA0029CC09 /* EventModelRealm.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		E2D83D672829124E0063B053 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		E2E5A29127E08E16009146E6 /* OfficinaSansExtraBoldSCC.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = OfficinaSansExtraBoldSCC.otf; sourceTree = "<group>"; };
 		E2ED4854285FC9C90029CC09 /* BlockOneNewProject.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlockOneNewProject.xcdatamodel; sourceTree = "<group>"; };
+		E2ED4857285FCD960029CC09 /* CategoryModelRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModelRealm.swift; sourceTree = "<group>"; };
+		E2ED4859285FCDAA0029CC09 /* EventModelRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModelRealm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 		E21ADDD827EB99CA00FB6A86 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E2ED4856285FCD6B0029CC09 /* Realm */,
 				E2ED4852285FC9AA0029CC09 /* CoreData */,
 				E2ED4848285FC6280029CC09 /* JSON */,
 			);
@@ -251,6 +256,15 @@
 				E2ED4853285FC9C90029CC09 /* BlockOneNewProject.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E2ED4856285FCD6B0029CC09 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				E2ED4857285FCD960029CC09 /* CategoryModelRealm.swift */,
+				E2ED4859285FCDAA0029CC09 /* EventModelRealm.swift */,
+			);
+			path = Realm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -415,6 +429,8 @@
 				E2014C79283EC0FD002AC49E /* DetailTabBarController.swift in Sources */,
 				E251D13E28440EAE0063C151 /* LoadDataService.swift in Sources */,
 				E21ADD8C27EA02A900FB6A86 /* AidCategoryViewController.swift in Sources */,
+				E2ED4858285FCD960029CC09 /* CategoryModelRealm.swift in Sources */,
+				E2ED485A285FCDAA0029CC09 /* EventModelRealm.swift in Sources */,
 				E2D83D682829124E0063B053 /* UILabel.swift in Sources */,
 				E21ADDD527EB947B00FB6A86 /* StackView.swift in Sources */,
 				E2014C7D2840008E002AC49E /* CategoryModel.swift in Sources */,
