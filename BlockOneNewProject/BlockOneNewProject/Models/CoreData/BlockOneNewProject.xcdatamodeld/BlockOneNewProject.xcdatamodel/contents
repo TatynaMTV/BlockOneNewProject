@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class"/>
-    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class"/>
+    <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
+        <attribute name="image" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+    </entity>
+    <entity name="Event" representedClassName="Event" syncable="YES" codeGenerationType="class">
+        <attribute name="address" attributeType="String"/>
+        <attribute name="fond" attributeType="String"/>
+        <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" attributeType="String"/>
+        <attribute name="info" attributeType="String"/>
+        <attribute name="information" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="phone" attributeType="String"/>
+        <attribute name="time" attributeType="String"/>
+    </entity>
     <elements>
-        <element name="Event" positionX="-63" positionY="-18" width="128" height="29"/>
-        <element name="Category" positionX="-54" positionY="-9" width="128" height="29"/>
+        <element name="Event" positionX="-45" positionY="0" width="128" height="164"/>
+        <element name="Category" positionX="-18" positionY="27" width="128" height="59"/>
     </elements>
 </model>
