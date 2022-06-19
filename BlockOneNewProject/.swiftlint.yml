@@ -24,3 +24,4 @@ disabled_rules:
   - control_statement
   - implicit_getter
   - redundant_void_return
+  - force_try
