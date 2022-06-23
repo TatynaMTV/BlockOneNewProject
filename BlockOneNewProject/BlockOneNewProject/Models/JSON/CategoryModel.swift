@@ -10,4 +10,17 @@ import UIKit
 struct CategoryModel: Decodable {
     var image: String
     var title: String
+    
+    static let databaseCD = CoreDataManager.shared
+    static let databaseRS = RealmManager.shared
+    
+    func storeCoreData() {
+        guard let category = CategoryModel.databaseCD.add(Category.self) else { return }
+        category.image = image
+        category.title = title
+    }
+    
+    func storeRealm() {
+//        guard let category = CategoryModel.databaseRS.
+    }
 }

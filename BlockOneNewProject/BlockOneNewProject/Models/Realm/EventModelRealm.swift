@@ -19,4 +19,3 @@ class EventModelRealm: Object {
     @Persisted var info: String
     @Persisted var information: String
 }
-
