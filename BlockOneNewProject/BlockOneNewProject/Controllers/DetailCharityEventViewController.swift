@@ -380,22 +380,3 @@ extension DetailCharityEventViewController {
         ])
     }
 }
-
-// MARK: - SwiftUI Canvas
-import SwiftUI
-struct NewProvider: PreviewProvider {
-    static var previews: some View {
-        ContainterView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainterView: UIViewControllerRepresentable {
-        
-        let viewController = DetailCharityEventViewController()
-        func makeUIViewController(context: UIViewControllerRepresentableContext<NewProvider.ContainterView>) -> DetailCharityEventViewController {
-            return viewController
-        }
-        
-        func updateUIViewController(_ uiViewController: NewProvider.ContainterView.UIViewControllerType, context: UIViewControllerRepresentableContext<NewProvider.ContainterView>) {
-        }
-    }
-}

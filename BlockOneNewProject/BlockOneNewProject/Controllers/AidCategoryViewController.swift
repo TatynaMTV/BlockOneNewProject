@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AidCategoryViewController: UIViewController {
     
@@ -41,9 +42,23 @@ class AidCategoryViewController: UIViewController {
         return spinner
     }()
     
-    var category: [CategoryModel]?
-    let dataLoader = DataLoader()
+    // variable responsible for the current database
+    private let saveInCoreData = true
+
+    // to save in CoreData
+    let database = CoreDataManager.shared
+    var categories: [Category]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
     
+    // to save in Realm
+    let localRealm = try! Realm()
+    var categoriesRealm: Results<CategoryModelRealm>!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -51,16 +66,32 @@ class AidCategoryViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
-        dataLoader.getCategoryType(type: CategoryModel.self, fileName: "category", format: "json") { [weak self] result in
-            switch result {
-            case .success(let category):
-                self?.category = category
-                DispatchQueue.main.async {
-                    self?.spinner.stopAnimating()
-                    self?.collectionView.reloadData()
+        // save and load to database
+        if saveInCoreData {
+            print("Database: CoreData")
+            if categories == nil {
+                ParsDataService().createCategorysCoreData {
+                    self.categories = self.database.fetch(Category.self)
+                    DispatchQueue.main.async {
+                        self.spinner.stopAnimating()
+                        self.collectionView.reloadData()
+                    }
                 }
-            case .failure(let error):
-                print("error:", error)
+            } else {
+                categories = database.fetch(Category.self)
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                    self.collectionView.reloadData()
+                }
+            }
+        } else {
+            print("Database: Realm")
+            ParsDataService().createCategoryRealm {
+                DispatchQueue.main.async {
+                    self.categoriesRealm = self.localRealm.objects(CategoryModelRealm.self)
+                    self.spinner.stopAnimating()
+                    self.collectionView.reloadData()
+                }
             }
         }
         
@@ -73,21 +104,36 @@ class AidCategoryViewController: UIViewController {
 
 extension AidCategoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return category?.count ?? 0
+        if saveInCoreData {
+            return categories?.count ?? 0
+        } else {
+            return categoriesRealm?.count ?? 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AidCategoryCollectionViewCell.identifire, for: indexPath) as! AidCategoryCollectionViewCell // swiftlint:disable:this force_cast
-        let model = category?[indexPath.row]
-        cell.categoryImageView.image = UIImage(named: model?.image ?? "adult")
-        cell.titleLabel.text = model?.title
+        
+        if saveInCoreData {
+            let model = categories?[indexPath.row]
+            cell.categoryImageView.image = UIImage(named: model?.image ?? "adult")
+            cell.titleLabel.text = model?.title
+        } else {
+            let model = categoriesRealm?[indexPath.row]
+            cell.categoryImageView.image = UIImage(named: model?.image ?? "adult")
+            cell.titleLabel.text = model?.title
+        }
 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = CharityEventsViewController()
-        nextVC.title = category?[indexPath.row].title
+        if saveInCoreData {
+            nextVC.title = categories?[indexPath.row].title
+        } else {
+            nextVC.title = categoriesRealm?[indexPath.row].title
+        }
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }

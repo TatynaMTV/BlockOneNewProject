@@ -18,9 +18,14 @@ struct CategoryModel: Decodable {
         guard let category = CategoryModel.databaseCD.add(Category.self) else { return }
         category.image = image
         category.title = title
+        CategoryModel.databaseCD.save()
     }
     
     func storeRealm() {
-//        guard let category = CategoryModel.databaseRS.
+        let categoryRealm = CategoryModelRealm()
+        categoryRealm.image = image
+        categoryRealm.title = title
+        CategoryModel.databaseRS.saveModel(model: categoryRealm)
+        print(categoryRealm)
     }
 }

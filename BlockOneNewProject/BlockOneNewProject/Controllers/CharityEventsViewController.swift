@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class CharityEventsViewController: UIViewController {
     
@@ -48,6 +49,23 @@ class CharityEventsViewController: UIViewController {
     private let cellID = "CharityEvent"
     private let items = ["Текущие", "Завершенные"]
     
+    // variable responsible for the current database
+    private let saveInCoreData = true
+    
+    // to save in CoreData
+    let database = CoreDataManager.shared
+    var events: [Event]? {
+        didSet {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    // to save in Realm
+    let localRealm = try! Realm()
+    var eventsRealm: Results<EventModelRealm>!
+    
     var event: [EventModel]?
     let dataLoader = DataLoader()
     
@@ -60,22 +78,37 @@ class CharityEventsViewController: UIViewController {
         navigationController?.navigationBar.backItem?.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
-        setupViews()
-        setConstraints()
-        
-        // download data
-        dataLoader.getCategoryType(type: EventModel.self, fileName: "event", format: "json") { result in
-            switch result {
-            case .success(let event):
-                self.event = event
+        // save and load to database
+        if saveInCoreData {
+            print("Database: CoreData")
+            if events == nil {
+                ParsDataService().createEventsCoreData {
+                    self.events = self.database.fetch(Event.self)
+                    DispatchQueue.main.async {
+                        self.spinner.stopAnimating()
+                        self.collectionView.reloadData()
+                    }
+                }
+            } else {
+                events = database.fetch(Event.self)
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
                     self.collectionView.reloadData()
                 }
-            case .failure(let error):
-                print("error:", error)
+            }
+        } else {
+            print("Database: Realm")
+            ParsDataService().createEventsRealm {
+                DispatchQueue.main.async {
+                    self.eventsRealm = self.localRealm.objects(EventModelRealm.self)
+                    self.spinner.stopAnimating()
+                    self.collectionView.reloadData()
+                }
             }
         }
+        
+        setupViews()
+        setConstraints()
     }
 }
 
@@ -83,31 +116,55 @@ class CharityEventsViewController: UIViewController {
 
 extension CharityEventsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        if saveInCoreData {
+            return events?.count ?? 0
+        } else {
+            return eventsRealm?.count ?? 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CharityEventCollectionViewCell // swiftlint:disable:this force_cast
-        let model = event?[indexPath.row]
-        cell.titleLabel.text = model?.name
-        cell.textLabel.text = model?.info
-        cell.bottomDateLabel.text = model?.time
-        cell.imageView.image = UIImage(named: model?.image ?? "image1")
+        if saveInCoreData {
+            let model = events?[indexPath.row]
+            cell.titleLabel.text = model?.name
+            cell.textLabel.text = model?.info
+            cell.bottomDateLabel.text = model?.time
+            cell.imageView.image = UIImage(named: model?.image ?? "image1")
+        } else {
+            let model = eventsRealm?[indexPath.row]
+            cell.titleLabel.text  = model?.name
+            cell.textLabel.text = model?.info
+            cell.bottomDateLabel.text = model?.time
+            cell.imageView.image = UIImage(named: model?.image ?? "image1")
+
+        }
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = true
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let model = event?[indexPath.row]
         let detailVC = DetailCharityEventViewController()
-        
-        detailVC.title = model?.name
-        detailVC.titleNameLabel.text = model?.name
-        detailVC.countdownTimerLabel.text = model?.time
-        detailVC.fondNameLable.text = model?.fond
-        detailVC.addressLabel.text = model?.address
-        detailVC.phoneLabel.text = model?.phone
+        if saveInCoreData {
+            let model = events?[indexPath.row]
+            
+            detailVC.title = model?.name
+            detailVC.titleNameLabel.text = model?.name
+            detailVC.countdownTimerLabel.text = model?.time
+            detailVC.fondNameLable.text = model?.fond
+            detailVC.addressLabel.text = model?.address
+            detailVC.phoneLabel.text = model?.phone
+        } else {
+            let model = eventsRealm?[indexPath.row]
+            
+            detailVC.title = model?.name
+            detailVC.titleNameLabel.text = model?.name
+            detailVC.countdownTimerLabel.text = model?.time
+            detailVC.fondNameLable.text = model?.fond
+            detailVC.addressLabel.text = model?.address
+            detailVC.phoneLabel.text = model?.phone
+        }
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

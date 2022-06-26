@@ -19,6 +19,7 @@
 		E21ADDE027EDD39800FB6A86 /* DetailCharityEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21ADDDF27EDD39800FB6A86 /* DetailCharityEventViewController.swift */; };
 		E222896828436AB200056BE5 /* PhotoEvetnCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E222896728436AB200056BE5 /* PhotoEvetnCollectionViewCell.swift */; };
 		E2395D30284812D20032AE53 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2395D2F284812D20032AE53 /* EventModel.swift */; };
+		E23DC58A28691AB300DCBAC9 /* ParsDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23DC58928691AB300DCBAC9 /* ParsDataService.swift */; };
 		E251D13E28440EAE0063C151 /* LoadDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251D13D28440EAE0063C151 /* LoadDataService.swift */; };
 		E27D857C285734190078320D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D857B285734190078320D /* RealmManager.swift */; };
 		E27D857E2857343A0078320D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D857D2857343A0078320D /* CoreDataManager.swift */; };
@@ -56,6 +57,7 @@
 		E21ADDDF27EDD39800FB6A86 /* DetailCharityEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCharityEventViewController.swift; sourceTree = "<group>"; };
 		E222896728436AB200056BE5 /* PhotoEvetnCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEvetnCollectionViewCell.swift; sourceTree = "<group>"; };
 		E2395D2F284812D20032AE53 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		E23DC58928691AB300DCBAC9 /* ParsDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsDataService.swift; sourceTree = "<group>"; };
 		E251D13D28440EAE0063C151 /* LoadDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDataService.swift; sourceTree = "<group>"; };
 		E27D857B285734190078320D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		E27D857D2857343A0078320D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				E251D13D28440EAE0063C151 /* LoadDataService.swift */,
+				E23DC58928691AB300DCBAC9 /* ParsDataService.swift */,
 				E27D857B285734190078320D /* RealmManager.swift */,
 				E27D857D2857343A0078320D /* CoreDataManager.swift */,
 			);
@@ -427,6 +430,7 @@
 				E2D6941F27DB55D100AA1F97 /* SplashScreenViewController.swift in Sources */,
 				E2D6943227DCB50A00AA1F97 /* TabBarViewController.swift in Sources */,
 				E2014C79283EC0FD002AC49E /* DetailTabBarController.swift in Sources */,
+				E23DC58A28691AB300DCBAC9 /* ParsDataService.swift in Sources */,
 				E251D13E28440EAE0063C151 /* LoadDataService.swift in Sources */,
 				E21ADD8C27EA02A900FB6A86 /* AidCategoryViewController.swift in Sources */,
 				E2ED4858285FCD960029CC09 /* CategoryModelRealm.swift in Sources */,
