@@ -49,25 +49,11 @@ class CharityEventsViewController: UIViewController {
     private let cellID = "CharityEvent"
     private let items = ["Текущие", "Завершенные"]
     
-    // variable responsible for the current database
-    private let saveInCoreData = true
-    
-    // to save in CoreData
-    let database = CoreDataManager.shared
-    var events: [Event]? {
-        didSet {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
-    
-    // to save in Realm
-    let localRealm = try! Realm()
-    var eventsRealm: Results<EventModelRealm>!
-    
-    var event: [EventModel]?
-    let dataLoader = DataLoader()
+    // variable responsible for the database
+    var events = [EventModel]()
+    let service = DatabaseService()
+    let loadLocalData = DataLoader()
+    let urlFireDatabase = "https://blockonenewproject-default-rtdb.firebaseio.com/Events/.json"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,30 +65,26 @@ class CharityEventsViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
         // save and load to database
-        if saveInCoreData {
-            print("Database: CoreData")
-            if events == nil {
-                ParsDataService().createEventsCoreData {
-                    self.events = self.database.fetch(Event.self)
-                    DispatchQueue.main.async {
-                        self.spinner.stopAnimating()
-                        self.collectionView.reloadData()
+        service.loadDataFB(type: EventModel.self, urlString: urlFireDatabase) { [weak self] result in
+            switch result {
+            case .success(let events):
+                self?.events = events
+                self?.spinner.stopAnimating()
+                self?.collectionView.reloadData()
+                print("My events: \(events)")
+            case .failure(let error):
+                print("error:", error)
+                self?.loadLocalData.getCategoryType(type: EventModel.self, fileName: "event", format: "json") { [weak self] result in
+                    switch result {
+                    case .success(let events):
+                        self?.events = events!
+                        DispatchQueue.main.async {
+                            self?.spinner.stopAnimating()
+                            self?.collectionView.reloadData()
+                        }
+                    case .failure(let error):
+                        print("error:", error)
                     }
-                }
-            } else {
-                events = database.fetch(Event.self)
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.collectionView.reloadData()
-                }
-            }
-        } else {
-            print("Database: Realm")
-            ParsDataService().createEventsRealm {
-                DispatchQueue.main.async {
-                    self.eventsRealm = self.localRealm.objects(EventModelRealm.self)
-                    self.spinner.stopAnimating()
-                    self.collectionView.reloadData()
                 }
             }
         }
@@ -116,29 +98,16 @@ class CharityEventsViewController: UIViewController {
 
 extension CharityEventsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if saveInCoreData {
-            return events?.count ?? 0
-        } else {
-            return eventsRealm?.count ?? 0
-        }
+        return events.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CharityEventCollectionViewCell // swiftlint:disable:this force_cast
-        if saveInCoreData {
-            let model = events?[indexPath.row]
-            cell.titleLabel.text = model?.name
-            cell.textLabel.text = model?.info
-            cell.bottomDateLabel.text = model?.time
-            cell.imageView.image = UIImage(named: model?.image ?? "image1")
-        } else {
-            let model = eventsRealm?[indexPath.row]
-            cell.titleLabel.text  = model?.name
-            cell.textLabel.text = model?.info
-            cell.bottomDateLabel.text = model?.time
-            cell.imageView.image = UIImage(named: model?.image ?? "image1")
-
-        }
+        let model = events[indexPath.row]
+        cell.titleLabel.text = model.name
+        cell.textLabel.text = model.info
+        cell.bottomDateLabel.text = model.time
+        cell.imageView.image = UIImage(named: model.image)
         cell.layer.cornerRadius = 10
         cell.layer.masksToBounds = true
         return cell
@@ -146,25 +115,14 @@ extension CharityEventsViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = DetailCharityEventViewController()
-        if saveInCoreData {
-            let model = events?[indexPath.row]
-            
-            detailVC.title = model?.name
-            detailVC.titleNameLabel.text = model?.name
-            detailVC.countdownTimerLabel.text = model?.time
-            detailVC.fondNameLable.text = model?.fond
-            detailVC.addressLabel.text = model?.address
-            detailVC.phoneLabel.text = model?.phone
-        } else {
-            let model = eventsRealm?[indexPath.row]
-            
-            detailVC.title = model?.name
-            detailVC.titleNameLabel.text = model?.name
-            detailVC.countdownTimerLabel.text = model?.time
-            detailVC.fondNameLable.text = model?.fond
-            detailVC.addressLabel.text = model?.address
-            detailVC.phoneLabel.text = model?.phone
-        }
+        let model = events[indexPath.row]
+        
+        detailVC.title = model.name
+        detailVC.titleNameLabel.text = model.name
+        detailVC.countdownTimerLabel.text = model.time
+        detailVC.fondNameLable.text = model.fond
+        detailVC.addressLabel.text = model.address
+        detailVC.phoneLabel.text = model.phone
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

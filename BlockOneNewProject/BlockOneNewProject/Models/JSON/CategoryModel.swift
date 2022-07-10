@@ -26,6 +26,5 @@ struct CategoryModel: Decodable {
         categoryRealm.image = image
         categoryRealm.title = title
         CategoryModel.databaseRS.saveModel(model: categoryRealm)
-        print(categoryRealm)
     }
 }
