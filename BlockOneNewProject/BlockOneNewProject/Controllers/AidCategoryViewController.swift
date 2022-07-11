@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class AidCategoryViewController: UIViewController {
     
@@ -19,7 +20,7 @@ class AidCategoryViewController: UIViewController {
         return label
     }()
     
-    private let collectionView: UICollectionView = {
+    private var collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +46,15 @@ class AidCategoryViewController: UIViewController {
     // variable responsible for the database
     var categories = [CategoryModel]()
     let service = DatabaseService()
+    let alamofireService = AlamofireSevice()
     let loadLocalData = DataLoader()
     let urlFireDatabase = "https://blockonenewproject-default-rtdb.firebaseio.com/Categories/.json"
+    
+    let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +63,7 @@ class AidCategoryViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
-        // save and load to database
+        // load data from Firebase whith URLSession
         service.loadDataFB(type: CategoryModel.self, urlString: urlFireDatabase) { [weak self] result in
             switch result {
             case .success(let category):
@@ -79,6 +87,21 @@ class AidCategoryViewController: UIViewController {
                 }
             }
         }
+        
+        // load data from Firebase whith Alamofire
+//        AF.request(urlFireDatabase).validate(statusCode: 200..<300).responseDecodable(of: [CategoryModel].self, decoder: decoder) { response in
+//            switch response.result {
+//            case .success(let categories):
+//                self.categories = categories
+//                DispatchQueue.main.async {
+//                    self.spinner.stopAnimating()
+//                    self.collectionView.reloadData()
+//                }
+//                print("items", categories)
+//            case .failure(let error):
+//                print("error", error.localizedDescription)
+//            }
+//        }
         
         setupViews()
         setConstraints()

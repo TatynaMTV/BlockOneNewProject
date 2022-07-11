@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import Alamofire
 
 class CharityEventsViewController: UIViewController {
     
@@ -55,6 +56,12 @@ class CharityEventsViewController: UIViewController {
     let loadLocalData = DataLoader()
     let urlFireDatabase = "https://blockonenewproject-default-rtdb.firebaseio.com/Events/.json"
     
+    let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,7 +71,7 @@ class CharityEventsViewController: UIViewController {
         navigationController?.navigationBar.backItem?.title = ""
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: barButtonItem)
         
-        // save and load to database
+        // load data from Firebase whith URLSession
         service.loadDataFB(type: EventModel.self, urlString: urlFireDatabase) { [weak self] result in
             switch result {
             case .success(let events):
@@ -88,6 +95,21 @@ class CharityEventsViewController: UIViewController {
                 }
             }
         }
+        
+        // load data from Firebase whith Alamofire
+//        AF.request(urlFireDatabase).validate(statusCode: 200..<300).responseDecodable(of: [EventModel].self, decoder: decoder) { response in
+//            switch response.result {
+//            case .success(let events):
+//                self.events = events
+//                DispatchQueue.main.async {
+//                    self.spinner.stopAnimating()
+//                    self.collectionView.reloadData()
+//                }
+//                print("items", events)
+//            case .failure(let error):
+//                print("error", error.localizedDescription)
+//            }
+//        }
         
         setupViews()
         setConstraints()

@@ -23,6 +23,7 @@
 		E251D13E28440EAE0063C151 /* LoadDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251D13D28440EAE0063C151 /* LoadDataService.swift */; };
 		E26A3B98287B6DBA0068BD8D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E26A3B97287B6DBA0068BD8D /* GoogleService-Info.plist */; };
 		E26A3B9C287B75980068BD8D /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26A3B9B287B75980068BD8D /* DatabaseService.swift */; };
+		E26A3B9E287B89C50068BD8D /* AlamofireServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26A3B9D287B89C50068BD8D /* AlamofireServise.swift */; };
 		E27D857C285734190078320D /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D857B285734190078320D /* RealmManager.swift */; };
 		E27D857E2857343A0078320D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D857D2857343A0078320D /* CoreDataManager.swift */; };
 		E2A8F0B027DFC75C000F611B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8F0AF27DFC75C000F611B /* UIColor.swift */; };
@@ -63,6 +64,7 @@
 		E251D13D28440EAE0063C151 /* LoadDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadDataService.swift; sourceTree = "<group>"; };
 		E26A3B97287B6DBA0068BD8D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E26A3B9B287B75980068BD8D /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		E26A3B9D287B89C50068BD8D /* AlamofireServise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireServise.swift; sourceTree = "<group>"; };
 		E27D857B285734190078320D /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		E27D857D2857343A0078320D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E2A8F0AF27DFC75C000F611B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				E26A3B9B287B75980068BD8D /* DatabaseService.swift */,
 				E251D13D28440EAE0063C151 /* LoadDataService.swift */,
 				E23DC58928691AB300DCBAC9 /* ParsDataService.swift */,
+				E26A3B9D287B89C50068BD8D /* AlamofireServise.swift */,
 				E27D857B285734190078320D /* RealmManager.swift */,
 				E27D857D2857343A0078320D /* CoreDataManager.swift */,
 			);
@@ -426,6 +429,7 @@
 				E2D555BA27CDA0B7000EC5C9 /* AppDelegate.swift in Sources */,
 				E21ADDE027EDD39800FB6A86 /* DetailCharityEventViewController.swift in Sources */,
 				E27D857E2857343A0078320D /* CoreDataManager.swift in Sources */,
+				E26A3B9E287B89C50068BD8D /* AlamofireServise.swift in Sources */,
 				E2A8F0B027DFC75C000F611B /* UIColor.swift in Sources */,
 				E2D6946827DF8A3A00AA1F97 /* AidCategoryCollectionViewCell.swift in Sources */,
 				E26A3B9C287B75980068BD8D /* DatabaseService.swift in Sources */,
